@@ -43,8 +43,8 @@ script:
     - ls -al
     - make html
     - ls -al
-    - make Collatz.log
+    - make voting.log
     - ls -al
     - make test
     - ls -al
-    - make check
+    #- make check
