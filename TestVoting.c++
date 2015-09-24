@@ -30,7 +30,13 @@ using namespace std;
 // read
 // ----
 
-TEST(VotingFixture, reading_cases) {
+TEST(VotingFixture, read) {
     string s("1\n");
     int result = voting_cases(s);
+    cout << result << endl;
     ASSERT_EQ( 1, result);}
+
+
+
+
+
