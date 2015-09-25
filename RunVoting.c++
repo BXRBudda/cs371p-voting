@@ -9,6 +9,9 @@
 // --------
 
 #include <iostream> // cin, cout
+#include <sstream>  // istringstream
+#include <limits>   // numeric_limits
+#include <vector>
 
 #include "Voting.h"
 
@@ -21,4 +24,4 @@ int main () {
     voting_solve(cin, cout);
     return 0;}
 
-/*
+

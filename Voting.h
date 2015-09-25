@@ -1,3 +1,11 @@
+// ----------------------------
+// projects/collatz/Collatz.c++
+// Copyright (C) 2015
+// Glenn P. Downing
+// ----------------------------
+
+//ifndef
+
 #ifndef voting_h
 #define voting_h
 
@@ -6,12 +14,12 @@
 // --------
 
 #include <iostream> // istream, ostream
-#include <string>   // ==
+#include <string>   // getline strings
 #include <vector>
-
+using namespace std;
 struct Candidate {
-    std::vector<std::string> currentBallots;
-    std::string name;
+    vector<string> currentBallots;
+    string name;
     int votes; // Removable. Able to use currentBallots.size() instead.
     bool valid;
 };
@@ -22,11 +30,11 @@ struct Candidate {
 
 /**
 * reads the input with different parsing depending on which part is being read
-* @param r a std::istream
-* @param c the Candidate struct to store all the data
-* @return true if that succeeds, false otherwise
+* r is a istream
+* c is the Candidate struct to store all the data
+* returns true if that succeeds, false otherwise
 */
-bool voting_read (std::istream&, std::vector<Candidate>&);
+bool voting_read (istream&, vector<Candidate>&);
 
 
 // ------------
@@ -34,10 +42,10 @@ bool voting_read (std::istream&, std::vector<Candidate>&);
 // ------------
 
 /**
-* @param c the Candidate struct storing all the data
-* @return the name of the winner or those who tied
+* c is the Candidate struct storing all the data
+* returns the name of the winner or those who tied
 */
-std::vector<std::string> voting_eval (std::vector<Candidate>&);
+vector<string> voting_eval (vector<Candidate>&);
 
 // -------------
 // voting_print
@@ -45,10 +53,10 @@ std::vector<std::string> voting_eval (std::vector<Candidate>&);
 
 /**
 * prints the name(s) of the winner(s)
-* @param w a std::ostream
-* @param name the name(s) of the winner(s) as a single string
+* w is a ostream
+* name is the list of  the name(s) of the winner(s) as a single string
 */
-void voting_print (std::ostream&, std::vector<std::string>&);
+void voting_print (ostream&, vector<string>&);
 
 // -------------
 // voting_solve
@@ -56,9 +64,9 @@ void voting_print (std::ostream&, std::vector<std::string>&);
 
 /**
 * read, eval, print loop
-* @param r a std::istream
-* @param w a std::ostream
+* r is a istream
+* w is a ostream
 */
-void voting_solve (std::istream&, std::ostream&);
+void voting_solve (istream& r, ostream& w);
 
 #endif

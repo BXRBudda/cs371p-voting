@@ -43,8 +43,6 @@ script:
     - ls -al
     - make html
     - ls -al
-    - make voting.log
-    - ls -al
     - make test
     - ls -al
     #- make check
