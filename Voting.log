@@ -1,0 +1,34 @@
+boser@caramello:/v/filer4b/v38q001/boser/school/voting/cs371p-voting$ git log
+commit 3200fa26aa654b2554342e34be94332ae0305480
+Author: BXRBudda <rajanbose@utexas.edu>
+Date:   Thu Sep 24 21:59:03 2015 -0500
+
+    should have pushed more - completed functionality
+
+commit 09a6a9333fc7b70886413d9ffc6144fbe8ae60d4
+Author: BXRBudda <rajanbose@utexas.edu>
+Date:   Thu Sep 24 17:23:32 2015 -0500
+
+    getting all the values printed out properly. Need to figure out vectors and arrays
+
+commit bab857aacd64da0057583fcd357a06bda4bdeda6
+Author: BXRBudda <rajanbose@utexas.edu>
+Date:   Thu Sep 24 03:07:46 2015 -0500
+
+    got it to output the input
+
+commit cafb9e8de3a8b1c9d5b3f9bbdced0d77f6215fc6
+Author: BXRBudda <rajanbose@utexas.edu>
+Date:   Mon Sep 21 20:36:42 2015 -0500
+
+    added understanding cases
+
+commit aa034727e9ece659b70eeb8ba522d08528575902
+Author: BXRBudda <rajanbose@utexas.edu>
+Date:   Sun Sep 20 21:50:41 2015 -0500
+
+    edited travis file
+
+commit 32515afe2939e89c8a26c38dcd9e69cc2894fcfb
+Author: BXRBudda <rajanbose@utexas.edu>
+Date:   Sun Sep 20 21:44:30 2015 -0500
