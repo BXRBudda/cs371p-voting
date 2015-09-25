@@ -1,4 +1,22 @@
-boser@caramello:/v/filer4b/v38q001/boser/school/voting/cs371p-voting$ git log
+boser@silverfish:/v/filer4b/v38q001/boser/school/voting/cs371p-voting$ git log
+commit 412515759a3136da3e77ca91ec0dc02ca56d270a
+Author: BXRBudda <rajanbose@utexas.edu>
+Date:   Fri Sep 25 17:23:02 2015 -0500
+
+    actual final commit, changed up style
+
+commit 0f17e3e87c8a071edf5c290b0c5493fa1557cad5
+Author: BXRBudda <rajanbose@utexas.edu>
+Date:   Fri Sep 25 01:31:38 2015 -0500
+
+    final commit
+
+commit 394add4221fe908a314bc0ab7dc06d7811f33c52
+Author: BXRBudda <rajanbose@utexas.edu>
+Date:   Thu Sep 24 22:07:19 2015 -0500
+
+    added log
+
 commit 3200fa26aa654b2554342e34be94332ae0305480
 Author: BXRBudda <rajanbose@utexas.edu>
 Date:   Thu Sep 24 21:59:03 2015 -0500
@@ -32,3 +50,5 @@ Date:   Sun Sep 20 21:50:41 2015 -0500
 commit 32515afe2939e89c8a26c38dcd9e69cc2894fcfb
 Author: BXRBudda <rajanbose@utexas.edu>
 Date:   Sun Sep 20 21:44:30 2015 -0500
+
+    initial commit
