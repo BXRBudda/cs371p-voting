@@ -13,10 +13,14 @@
 // includes
 // --------
 
-#include <iostream> // istream, ostream
-#include <string>   // getline strings
-#include <vector>
+#include <cassert>  // assert
+#include <sstream>  // istringstream
+#include <limits>   // numeric_limits
+#include <vector>  //vectors
+#include <string> //strings
 using namespace std;
+
+
 struct Candidate {
     vector<string> currentBallots;
     string name;

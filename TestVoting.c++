@@ -63,11 +63,6 @@ TEST(VotingFixture, read_2){
         ASSERT_EQ(1,c[2].votes);
         ASSERT_EQ(true,c[2].valid);}
 
-
-
-		
- 	    
-
 // // -----------
 // // eval
 // // -----------
@@ -118,7 +113,7 @@ TEST(VotingFixture, eval_1){
 	vector<Candidate> c;
         vector<string> b, r;
         b.push_back("1 2 3");
-        Candidate d = {b, "Adam Bob", 1, true};
+        Candidate d = {b, "Rick Morty", 1, true};
         c.push_back(d);
         b.clear();
         b.push_back("2 1 3");
@@ -130,7 +125,7 @@ TEST(VotingFixture, eval_1){
         c.push_back(d);
         r = voting_eval(c);
         ASSERT_EQ(3,r.size());
-        ASSERT_EQ("Adam Bob", r[0]);
+        ASSERT_EQ("Rick Morty", r[0]);
         ASSERT_EQ("Carol Dog",r[1]);
         ASSERT_EQ("Elaine Fast",r[2]);}
 
@@ -188,11 +183,11 @@ TEST(VotingFixture, solve_2){
 TEST(VotingFixture, solve_3){
 	 istringstream r("2\n\n1\nJack Smith\n"
                              "1\n\n"
-                             "3\nAdam Bob\nCarol Dog\nElaine Fast\n"
+                             "3\nRick Morty\nCarol Dog\nElaine Fast\n"
                              "1 2 3\n2 1 3\n3 2 1");
         ostringstream w;
         voting_solve(r, w);
-        ASSERT_EQ("Jack Smith\n\n""Adam Bob\nCarol Dog\nElaine Fast\n",w.str());}
+        ASSERT_EQ("Jack Smith\n\n""Rick Morty\nCarol Dog\nElaine Fast\n",w.str());}
 
 
   

@@ -13,6 +13,8 @@
 #include <limits>   // numeric_limits
 #include <vector>  //vectors
 #include <string> //strings
+#include <iostream> // endl, istream, ostream
+
 
 #include "Voting.h"
 using namespace std;
@@ -33,116 +35,106 @@ bool voting_read (istream& r, vector<Candidate>& c) {
         c is vector of Candidate structs to store all the data
         return true if it succeeds, false otherwise
     */
-    int numNames;
-    r >> numNames;
+    int names;
+    r >> names;
     if (!r)
         return false;
-    assert(numNames > 0);
-    
     // Read past the first newline character
     string buffer;
     getline(r, buffer);
-    
     // Read candidate names into candidates vector
-    for (unsigned int i = 0; i < numNames; ++i) {
+    for (int i = 0; i < names; ++i) {
         Candidate temp;
         getline(r, temp.name);
         temp.votes = 0;
         temp.valid = true;
         c.push_back(temp);
     }
-
-    // Read ballots and store in associated candidate vector
-
-
-
-    while (true) {
-        string tempBallot = "";
-        getline(r, tempBallot);
-        if (tempBallot == "")
-            break;
-        istringstream iss(tempBallot, istringstream::in);
-        int tempCandidate = 0;
-        iss >> tempCandidate;
-        assert(tempCandidate > 0 && tempCandidate <= numNames);
-        c[tempCandidate - 1].currentBallots.push_back(tempBallot);
-        ++c[tempCandidate - 1].votes;
+    // while we have ballots read, add them to their associated candiadate 
+    string tempBallot = "";
+    while (getline(r, tempBallot) && !tempBallot.empty()) {
+        istringstream line_input(tempBallot, istringstream::in); //create buffer for the ballto
+        int candiadateIndex = 0;
+        line_input >> candiadateIndex;
+        c[candiadateIndex - 1].currentBallots.push_back(tempBallot);
+        ++c[candiadateIndex - 1].votes;
     }
-
     return true;}
 
 // ------------
 // voting_eval
 // ------------
-
 vector<string> voting_eval (vector<Candidate>& c) {
     /*
         c is the Candidate struct storing all the data
         return the name of the winner or those who tied
     */
-    assert(c.size() > 0);
     vector<string> winners, possibleLosers;
     vector<int> losers;
     
     // Count the total number of ballots
     int totalBallots = 0;
-    for (unsigned int i = 0; i < c.size(); ++i) {
+    for (int i = 0; i < c.size(); ++i) {
         totalBallots += c[i].votes;
     }
-    
-    while (true) {
+    bool ended = false;
+    while (!ended) {
         int low = INT_MAX, high = 0;
     
-        // Check for >50% of ballots
-        for (unsigned int i = 0; i < c.size(); ++i) {
+        // Check for candidates with more than 50% votes
+        for (int i = 0; i < c.size(); ++i) {
             if (c[i].votes > (totalBallots / 2)) {
                 winners.push_back(c[i].name);
-                return winners;
+                ended = true; //reached end condition.
             }
         }
-        
-        // Run through the votes and track where each candidate stands
-        for (unsigned int i = 0; i < c.size(); ++i) {
-            Candidate cand = c[i];
-            if (!cand.valid) continue;
-            if (cand.votes < low) {
-                low = cand.votes;
-                possibleLosers.clear();
-                possibleLosers.push_back(cand.name);
-                losers.clear();
-                losers.push_back(i);
-            } else if (cand.votes == low) {
-                possibleLosers.push_back(cand.name);
-                losers.push_back(i);
+
+
+        if(!ended){ //if we've already ended, then don't do more checking.
+                    //if we haven't ended, keep looking
+            for (int i = 0; i < c.size(); ++i) {
+                Candidate cand = c[i];
+                if (!cand.valid) continue;
+                if (cand.votes < low) { //found a "bigger loser", make them the benchmark
+                    low = cand.votes;   //for losing
+                    possibleLosers.clear();
+                    possibleLosers.push_back(cand.name);
+                    losers.clear();
+                    losers.push_back(i);
+                } else if (cand.votes == low) {
+                    possibleLosers.push_back(cand.name);
+                    losers.push_back(i);
+                }
+                if (cand.votes > high) {
+                    high = cand.votes;
+                }
             }
-            if (cand.votes > high) {
-                high = cand.votes;
-            }
-        }
+            // Run through the votes and track where each candidate stands
+       
         
-        // Check for an all-way tie, return all candidates if a tie exists
-        // Reject losers if not
-        if (low == high) {
-            winners = possibleLosers;
-            return winners;
-        } else {
-            for (unsigned int i = 0; i < losers.size(); ++i) {
+        // Check for ties, 
+        // Reject losers if no tie exists
+        if (low != high) { //if low != high, check the losers and reject them
+             for (int i = 0; i < losers.size(); ++i) {
                 int loser = losers[i];
                 c[loser].valid = false;
                 for(int j = 0; j < c[loser].currentBallots.size(); ++j) {
-                    istringstream iss(c[loser].currentBallots[j],
-                                           istringstream::in);
+                    istringstream input(c[loser].currentBallots[j],istringstream::in);
                     int nextLoser = -1;
-                    iss >> nextLoser;
+                    input >> nextLoser;
                     while (!c[nextLoser - 1].valid) {
-                        iss >> nextLoser;
+                        input >> nextLoser;
                     }
-                    assert(nextLoser > 0);
                     c[nextLoser - 1].currentBallots.push_back(c[loser].currentBallots[j]);
                     ++c[nextLoser - 1].votes;
                 }
                 c[loser].votes = 0;
                 c[loser].currentBallots.clear();
+           } 
+        }else { //if low == high, means tie, so return all candidates who tied
+             winners = possibleLosers;
+             ended = true;
+            //return winners;
             }
         }
     }
@@ -154,14 +146,14 @@ vector<string> voting_eval (vector<Candidate>& c) {
 
 void voting_print (ostream& w, vector<string>& names) {
     /*
-        print the name(s) of the winner(s)
+        printthe name(s) of the winner(s)
         w is a writer
         record the name(s) of the winner(s) as a single string
     */
-    assert(names.size() > 0);
-    for (unsigned int i = 0; i < names.size(); ++i) {
-        w << names[i] << endl;
-    }}
+   
+    for (int i = 0; i < names.size(); ++i) {
+        w << names[i] << endl;}
+}
 
 // -------------
 // voting_solve
@@ -173,23 +165,22 @@ void voting_solve (istream& r, ostream& w) {
         r is a reader
         w is a writer
     */
-    int numCases = 0;
+    int cases = 0;
     vector<Candidate> candidates;
     
-    r >> numCases;
+    r >> cases;
     if (!r)
         return;
-    assert(numCases > 0);
-    
     // Read past the first two newline characters
     string buffer;
     getline(r, buffer);
     getline(r, buffer);
     
-    for (int i = 0; i < numCases && voting_read(r, candidates); ++i) {
+    for (int i = 0; i < cases && voting_read(r, candidates); ++i) {
         vector<string> winners = voting_eval(candidates);
         if (i != 0)
             w << endl;
         voting_print(w, winners);
-        candidates.clear();}}
+        candidates.clear();}
+    }
 
